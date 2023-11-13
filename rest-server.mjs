@@ -1,4 +1,4 @@
-import app from './simple-rest.mjs'; // Adjust the path based on the actual file structure
+import app from './modules/simple-rest.mjs';
 
 const port = 3770;
 
