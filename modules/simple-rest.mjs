@@ -10,14 +10,14 @@ app.get('/', (req, res) => {
     res.send("Hello There! You're probably not supposed to see this, I think you need a specific endpoint.");
 });
 
-app.get('/sl-cda', (req, res) => {
+app.get('/sl-cda', async (req, res) => {
     if (req.query.secret) {
         // Has secret associated, check it
         if (req.query.secret == config.secret) {
             res.send("You got it");
             // Do things here later, possibly email
             try {
-                mail({
+                await mail({
                     from: 'noreply@fifox.fi',
                     to: config.mailConfig.to,
                     subject: 'This is a test email',
