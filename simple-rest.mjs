@@ -16,8 +16,8 @@ app.get('/sl-cda', (req, res) => {
             res.send("You got it");
             // Do things here later, possibly email
         }else{
-            res.status(401).json({error: 'Unauthorized'});
-            // While this locally will return express's 401, on the domain
+            res.status(406).json({error: 'Unauthorized, not accepted'});
+            // While this locally will return express's 406, on the domain
             // Nginx will be configured to override and return its own.
         }
     }else{
