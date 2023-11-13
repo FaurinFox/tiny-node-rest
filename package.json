@@ -1,0 +1,23 @@
+{
+  "name": "tiny-node-rest",
+  "version": "1.0.0",
+  "description": " Does a very specific thing i happen to need, that's it.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github-faurin:FaurinFox/tiny-node-rest.git"
+  },
+  "keywords": [
+    "rest",
+    "node",
+    "api",
+    "simple",
+    "specific",
+    "personal"
+  ],
+  "author": "Faurin Littlepaws",
+  "license": "MIT"
+}
