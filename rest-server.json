@@ -1,0 +1,10 @@
+{
+    "apps": [
+        {
+            "name": "rest-server",
+            "script": "rest-server.mjs",
+            "time": true,
+            "cwd": "/u-slbot/tiny-node-rest"
+       }
+    ]
+}
