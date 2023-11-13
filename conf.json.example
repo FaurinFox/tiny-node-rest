@@ -1,3 +1,13 @@
 {
-    "secret": "some very long secret to change and use!"
+    "secret": "some very long secret to change and use!",
+    "mailConfig": {
+        "host": "ssl0.ovh.net",
+        "port": 465,
+        "secure": true,
+        "auth": {
+            "user": "your-user",
+            "password": "your-pw"
+        },
+        "comment": "As seen here, i used ovh to send things."
+    }
 }
