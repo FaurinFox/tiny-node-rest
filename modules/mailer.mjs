@@ -1,5 +1,5 @@
 import config from '../conf.json' assert {type: 'json'};
-import nodemailer from 'nodemailer'
+import nodemailer from 'nodemailer';
 
 const mailer = function mail(detailsObject) {
     // Create a Nodemailer transport using SMTP
