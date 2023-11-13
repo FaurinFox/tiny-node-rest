@@ -20,14 +20,18 @@ const mailer = function mail(detailsObject) {
         subject: detailsObject.subject,
         text: detailsObject.text
     };
-    // Send the email
-    transporter.sendMail(mailOptions, (error, info) => {
-        if (error) {
-        throw new Error('Error sending email:', error);
-        } else {
-        console.log('Email sent:', info.response);
-        }
-    });
+    // Return a promise in order to catch the error in the main code
+    return new Promise((resolve, reject) => {
+        // Send the email
+        transporter.sendMail(mailOptions, (error, info) => {
+            if (error) {
+                reject(new Error('Error sending email:', error));
+            } else {
+                console.log('Email sent:', info.response);
+                resolve(info);
+            }
+        });
+    })
 }
 
 export default mailer;
