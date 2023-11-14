@@ -4,7 +4,7 @@ import config from './conf.json' assert {type: 'json'};
 const isValidNumber = (value) => !isNaN(Number(value));
 
 const performGetRequest = (days) => {
-  const url = `https://${config.requesterConfig.targetHost}/sl-cda?days=${days}&secret=${config.secret}`;
+  const url = `https://${config.requesterConfig.targetHost}/sl-cda?days=${days}&format=json&secret=${config.secret}`;
 
   return new Promise((resolve, reject) => {
     const req = https.get(url, (res) => {

@@ -5,17 +5,29 @@ import mail from './mailer.mjs';
 const debug = config.debug;
 const app = express();
 
+function send(message, request, response) {
+    if (request.query.format) {
+        if (request.query.format.toLowerCase() === "json") {
+            response.send(JSON.stringify({ message: `${message}` }));
+        }else{
+            response.send(`${message}`);
+        }
+    }else{
+        response.send(`${message}`);
+    }
+}
+
 app.use(express.static('static'));
 
 app.get('/', (req, res) => {
-    res.send("Hello There! You're probably not supposed to see this, I think you need a specific endpoint.");
+    send("Hello There! You're probably not supposed to see this, I think you need a specific endpoint.", req, res);
 });
 
 app.get('/sl-cda', async (req, res) => {
     if (req.query.secret) {
         // Has secret associated, check it
         if (req.query.secret == config.secret) {
-            res.send("You got it, SL-CDA Notification was sent to the target");
+            send("You got it, SL-CDA Notification was sent to the target", req, res);
             try {
                 if (!debug)
                     await mail({
@@ -31,6 +43,7 @@ app.get('/sl-cda', async (req, res) => {
             }
 
         }else{
+            // These will ignore format parameter, always return json
             res.status(406).json({error: 'Unauthorized, not accepted'});
             // While this locally will return express's 406, on the domain
             // Nginx will be configured to override and return its own.
