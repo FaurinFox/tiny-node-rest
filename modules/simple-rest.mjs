@@ -8,7 +8,7 @@ const app = express();
 function send(message, request, response) {
     if (request.query.format) {
         if (request.query.format.toLowerCase() === "json") {
-            response.send(JSON.stringify({ message: `${message}` }));
+            response.send({ message: `${message}` });
         }else{
             response.send(`${message}`);
         }
