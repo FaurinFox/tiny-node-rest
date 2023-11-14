@@ -2,6 +2,7 @@ import express from 'express';
 import config from '../conf.json' assert {type: 'json'};
 import mail from './mailer.mjs';
 
+const debug = config.debug;
 const app = express();
 
 app.use(express.static('static'));
@@ -16,12 +17,15 @@ app.get('/sl-cda', async (req, res) => {
         if (req.query.secret == config.secret) {
             res.send("You got it, SL-CDA Notification was sent to the target");
             try {
-                await mail({
-                    from: config.mailConfig.from,
-                    to: config.mailConfig.to,
-                    subject: 'SL-CDA',
-                    text: `CDA was triggerred for ${!isNaN(Number(req.query.days)) ? Number(req.query.days) : 1} ${!isNaN(Number(req.query.days)) && Number(req.query.days) !== 1 ? 'days' : 'day'}.`
-                });
+                if (!debug)
+                    await mail({
+                        from: config.mailConfig.from,
+                        to: config.mailConfig.to,
+                        subject: 'SL-CDA',
+                        text: `CDA was triggerred for ${!isNaN(Number(req.query.days)) ? Number(req.query.days) : 1} ${!isNaN(Number(req.query.days)) && Number(req.query.days) !== 1 ? 'days' : 'day'}.`
+                    });
+                else
+                    console.warn("Debug mode was active, would've sent email if it wasn't.");
             } catch (error) {
                 console.error(error);
             }
