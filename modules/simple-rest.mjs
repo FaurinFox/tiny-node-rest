@@ -14,14 +14,13 @@ app.get('/sl-cda', async (req, res) => {
     if (req.query.secret) {
         // Has secret associated, check it
         if (req.query.secret == config.secret) {
-            res.send("You got it");
-            // Do things here later, possibly email
+            res.send("You got it, SL-CDA Notification was sent to the target");
             try {
                 await mail({
-                    from: 'noreply@fifox.fi',
+                    from: config.mailConfig.from,
                     to: config.mailConfig.to,
-                    subject: 'This is a test email',
-                    text: 'And this is the body of the test email'
+                    subject: 'SL-CDA',
+                    text: `CDA was triggerred for ${!isNaN(Number(req.query.days)) ? Number(req.query.days) : 1} ${!isNaN(Number(req.query.days)) && Number(req.query.days) !== 1 ? 'days' : 'day'}.`
                 });
             } catch (error) {
                 console.error(error);
