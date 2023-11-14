@@ -9,5 +9,11 @@
             "password": "your-pw"
         },
         "comment": "As seen here, i used ovh to send things."
+        "from": "noreply@example.com",
+        "to": "somebody@example.com"
+    },
+    "requesterConfig": {
+        "targetHost": "domain.hosting.the.thing.example",
+        "comment": "Do not include http/https here."
     }
 }
