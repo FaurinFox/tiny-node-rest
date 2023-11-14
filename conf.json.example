@@ -1,5 +1,6 @@
 {
     "secret": "some very long secret to change and use!",
+    "debug": false,
     "mailConfig": {
         "host": "ssl0.ovh.net",
         "port": 465,
