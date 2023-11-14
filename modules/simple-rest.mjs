@@ -1,9 +1,11 @@
 import express from 'express';
 import config from '../conf.json' assert {type: 'json'};
 import mail from './mailer.mjs';
+import Utilities from './utils.mjs';
 
 const debug = config.debug;
 const app = express();
+const utils = new Utilities();
 
 function send(message, request, response) {
     if (request.query.format) {
@@ -33,7 +35,7 @@ app.get('/sl-cda', async (req, res) => {
                     await mail({
                         from: config.mailConfig.from,
                         to: config.mailConfig.to,
-                        subject: 'SL-CDA',
+                        subject: `SL-CDA +${utils.daysToHours(!isNaN(Number(req.query.days)) ? Number(req.query.days) : 1)}`,
                         text: `CDA was triggerred for ${!isNaN(Number(req.query.days)) ? Number(req.query.days) : 1} ${!isNaN(Number(req.query.days)) && Number(req.query.days) !== 1 ? 'days' : 'day'}.`
                     });
                 else
