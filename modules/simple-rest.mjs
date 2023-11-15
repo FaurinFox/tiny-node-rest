@@ -7,6 +7,9 @@ const debug = config.debug;
 const app = express();
 const utils = new Utilities();
 
+let attachmentAddress = config.mailConfig.to;
+let attachmentKey = attachmentAddress.split('@')[0];
+
 function send(message, request, response) {
     if (request.query.format) {
         if (request.query.format.toLowerCase() === "json") {
@@ -26,6 +29,10 @@ app.get('/', (req, res) => {
 });
 
 app.get('/sl-cda', async (req, res) => {
+    if(req.query.attachmentKey) {
+        attachmentKey = req.query.attachmentKey;
+        attachmentAddress = attachmentKey+attachmentAddress.split('@')[1];
+    }
     if (req.query.secret) {
         // Has secret associated, check it
         if (req.query.secret == config.secret) {
@@ -34,7 +41,7 @@ app.get('/sl-cda', async (req, res) => {
                 if (!debug)
                     await mail({
                         from: config.mailConfig.from,
-                        to: config.mailConfig.to,
+                        to: attachmentAddress,
                         subject: `SL-CDA +${utils.daysToHours(!isNaN(Number(req.query.days)) ? Number(req.query.days) : 1)}`,
                         text: `CDA was triggerred for ${!isNaN(Number(req.query.days)) ? Number(req.query.days) : 1} ${!isNaN(Number(req.query.days)) && Number(req.query.days) !== 1 ? 'days' : 'day'}.`
                     });
@@ -51,8 +58,12 @@ app.get('/sl-cda', async (req, res) => {
             // Nginx will be configured to override and return its own.
         }
     }else{
-        res.status(401).json({error: 'Unauthorized, secret missing'});
-        // Much the same as the above comments.
+        if (req.query.attachmentKey) {
+            send("Key set.", req, res);
+        }else{
+            res.status(401).json({error: 'Unauthorized, secret missing'});
+            // Much the same as the above comments.
+        }
     }
 });
 
