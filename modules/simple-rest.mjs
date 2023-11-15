@@ -32,6 +32,7 @@ app.get('/sl-cda', async (req, res) => {
     if(req.query.attachmentKey) {
         attachmentKey = req.query.attachmentKey;
         attachmentAddress = attachmentKey+attachmentAddress.split('@')[1];
+        console.log("New key, replaced old.")
     }
     if (req.query.secret) {
         // Has secret associated, check it
