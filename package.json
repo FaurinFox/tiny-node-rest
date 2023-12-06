@@ -1,12 +1,13 @@
 {
   "name": "tiny-node-rest",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": " Does a very specific thing i happen to need, that's it.",
   "main": "rest-server.mjs",
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node rest-server.mjs"
+    "start": "node rest-server.mjs",
+    "req": "node simpleRequest.mjs"
   },
   "repository": {
     "type": "git",
